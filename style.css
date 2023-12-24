@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&family=Press+Start+2P&family=Rampart+One&display=swap');
+*{
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+
+.page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerGame {
+    width: 1000px;
+    height: 500px;
+    background-color: skyblue;
+    position: relative;
+    overflow-x: hidden;
+    /* overflow-y: visible; */
+}
+
+.containerBarriers{
+    height: 100%;
+}
+
+.normalBarrier {
+    background-color: green;
+    width: 70px;
+}
+
+.reverseBarrier {
+    background-color: green;
+    width: 70px;
+}
+
+.paresBarries {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 70px;
+    height: 100%;
+    position: absolute;
+}
+.imageBird{
+   width: 50px;
+   position: absolute;
+   left: 350px;
+}
+
+.score {
+    font-family: "Press Start 2P";
+    font-size: 30px;
+    color: gold;
+    position: absolute;
+    right: 56px;
+    top: 20px;
+    z-index: 10;
+}
