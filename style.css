@@ -82,3 +82,9 @@
     top: 20px;
     z-index: 10;
 }
+
+.bullet {
+    width: 40px;
+    position: absolute;
+    right: -70px;
+}
