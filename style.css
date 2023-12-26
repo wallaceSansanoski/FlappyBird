@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,300&family=Press+Start+2P&family=Rampart+One&display=swap');
+
 *{
     padding: 0;
     box-sizing: border-box;
@@ -21,27 +22,47 @@
     background-color: skyblue;
     position: relative;
     overflow-x: hidden;
-    /* overflow-y: visible; */
-}
-
-.containerBarriers{
-    height: 100%;
+    overflow-y: hidden;
+    border: 5px solid black;
 }
 
 .normalBarrier {
-    background-color: green;
+    background: linear-gradient(90deg, #07be4a, #A5E82E);
+    border-left: 2px solid black;
+    border-right: 2px solid black;
     width: 70px;
+    position: relative;
 }
 
 .reverseBarrier {
-    background-color: green;
+    background: linear-gradient(90deg, #07be4a, #A5E82E);
+    border-left: 2px solid black;
+    border-right: 2px solid black;
     width: 70px;
 }
 
+.border {
+    width: 80px;
+    height: 20px;
+    background: linear-gradient(90deg, #07be4a, #A5E82E);
+    position: absolute;
+    left: -5px;
+    border: 2px solid black;
+}
+.border1 {
+    width: 80px;
+    height: 20px;
+    background: linear-gradient(90deg, #07be4a, #A5E82E);
+    position: absolute;
+    bottom: 0px;
+    left: -7px;
+    border: 2px solid black;
+}
 .paresBarries {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     width: 70px;
     height: 100%;
     position: absolute;
