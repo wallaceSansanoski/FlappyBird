@@ -10,7 +10,7 @@ let increaseBulletMoviment1 = -70
 let increaseBulletMoviment2 = -70
 let increaseBulletMoviment3 = -70
 let increaseBulletMoviment4 = 70
-let decreaseTopHeightBullet3 = 1
+let decreaseTopHeightBullet3 = 500
 let increaseBottomHeightBullet = -70
 
 const createElement = (element, nameClass) => {
@@ -36,7 +36,7 @@ containerGame.append(bullet2)
 
 const bullet3 = createElement('img', 'bullet')
 bullet3.src = './newBullet.png'
-bullet3.style.top = `${-82}px`
+bullet3.style.bottom = `${500}px`
 containerGame.append(bullet3)
 
 const bullet4 = createElement('img', 'bullet')
@@ -201,28 +201,16 @@ const checkBirdEdgeLimit = () => {
 
 const increaseHeightBird = e => {
 
-    console.log(e.key === 'ArrowUp' || e.key === 'w')
-
     const heightOfBird = Number(bird.style.bottom.split('p')[0])
     const leftOfBird = Number(bird.style.left.split('p')[0])
 
-    if (e.key === 'ArrowUp' || e.key === 'w' && !stopGame) {
+    if (['ArrowUp', 'w'].includes(e.key) && !stopGame) {
         bird.style.bottom = heightOfBird + 30 + 'px'
     }
 
-    if (e.key === 'ArrowDown' || e.key === 's' && !stopGame) {
+    if (['ArrowDown', 's'].includes(e.key)  && !stopGame) {
         bird.style.bottom = heightOfBird - 30 + 'px'
     }
-
-    if (e.key === 'ArrowRight' || e.key === 'd' && !stopGame) {
-        bird.style.left = (leftOfBird + 20) + 'px'
-    }
-
-    if (e.key === 'ArrowLeft' || e.key === 'a' && !stopGame) {
-        bird.style.left = (leftOfBird - 20) + 'px'
-    }
-
-
 }
 
 containerGame.addEventListener("keydown", increaseHeightBird)
@@ -236,19 +224,19 @@ const stopIntervalID = setInterval(() => {
 }, 20)
 
 
-setInterval(() => {
+const clarSetIntervalAnimationBulletID = setInterval(() => {
 
     if (score >= 100) {
         increaseBulletMoviment3++
-        decreaseTopHeightBullet3++
+        decreaseTopHeightBullet3--
         bullet3.style.right = `${increaseBulletMoviment3}px`
-        bullet3.style.top = `${decreaseTopHeightBullet3}px`
+        bullet3.style.bottom = `${decreaseTopHeightBullet3}px`
     }
 
 
-    if (Number(bullet3.style.top.split("px")[0]) >= 500) {
-        decreaseTopHeightBullet3 = -70
-        bullet3.style.top = `${decreaseTopHeightBullet3}px`
+    if (Number(bullet3.style.bottom.split("px")[0]) <= 0) {
+        decreaseTopHeightBullet3 = 500
+        bullet3.style.bottom = `${decreaseTopHeightBullet3}px`
     }
 
     if (Number(bullet3.style.right.split("px")[0]) >= 1010) {
@@ -308,6 +296,173 @@ setInterval(() => {
         increaseBulletMoviment = -70
         bullet.style.right = `${increaseBulletMoviment}px`
         bullet.style.bottom = `${heightBullet}px`
+    }
+
+   // colision bulet one with bird by top
+    if (
+        Number(bird.style.bottom.split("px")[0]) - 30 === Number(bullet.style.bottom.split("px")[0])
+        && Number(bullet.style.right.split("px")[0]) - 15 > 905 - Number(bird.style.left.split("px")[0])
+        && Number(bullet.style.right.split("px")[0]) - 15 < 640
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
+    }
+
+    // colision bulet one with bird by right 
+    if (Number(bullet.style.right.split("px")[0]) - 15 === 900 - Number(bird.style.left.split("px")[0])
+        && Number(bird.style.bottom.split("px")[0]) - 30 <= Number(bullet.style.bottom.split("px")[0])
+        && Number(bird.style.bottom.split("px")[0]) >= Number(bullet.style.bottom.split("px")[0]) - 40
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
+    }
+
+    // colision bulet one with bird by bottom
+    if (
+        Number(bird.style.bottom.split("px")[0]) + 40 === Number(bullet.style.bottom.split("px")[0])
+        && Number(bullet.style.right.split("px")[0]) - 15 > 905 - Number(bird.style.left.split("px")[0])
+        && Number(bullet.style.right.split("px")[0]) - 15 < 640
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
+    }
+
+    ///------------------------------------------------------------->>>>>>>>>>>>>>>>
+
+    ///colision bullet two by top
+
+    if (
+        Number(bird.style.bottom.split("px")[0]) - 30 === Number(bullet1.style.bottom.split("px")[0])
+        && Number(bullet1.style.right.split("px")[0]) - 15 > 905 - Number(bird.style.left.split("px")[0])
+        && Number(bullet1.style.right.split("px")[0]) - 15 < 640
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
+    }
+
+    // colision bullet two by right 
+    if (Number(bullet1.style.right.split("px")[0]) - 15 === 890 - Number(bird.style.left.split("px")[0])
+        && Number(bird.style.bottom.split("px")[0]) - 30 <= Number(bullet1.style.bottom.split("px")[0])
+        && Number(bird.style.bottom.split("px")[0]) >= Number(bullet1.style.bottom.split("px")[0]) - 40
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
+    }
+
+    // colision bulet two with bird by bottom
+    if (
+        Number(bird.style.bottom.split("px")[0]) + 40 === Number(bullet1.style.bottom.split("px")[0])
+        && Number(bullet1.style.right.split("px")[0]) - 15 > 905 - Number(bird.style.left.split("px")[0])
+        && Number(bullet1.style.right.split("px")[0]) - 15 < 640
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
+    }
+
+    /// ---------------------------------------------------------->
+    ///colision bullet two by top
+
+    if (
+        Number(bird.style.bottom.split("px")[0]) - 30 === Number(bullet2.style.bottom.split("px")[0])
+        && Number(bullet2.style.right.split("px")[0]) - 15 > 905 - Number(bird.style.left.split("px")[0])
+        && Number(bullet2.style.right.split("px")[0]) - 15 < 640
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
+    }
+
+    // colision bullet two by right 
+    if (Number(bullet2.style.right.split("px")[0]) - 15 === 890 - Number(bird.style.left.split("px")[0])
+        && Number(bird.style.bottom.split("px")[0]) - 30 <= Number(bullet2.style.bottom.split("px")[0])
+        && Number(bird.style.bottom.split("px")[0]) >= Number(bullet2.style.bottom.split("px")[0]) - 40
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
+    }
+
+    // colision bulet two with bird by bottom
+    if (
+        Number(bird.style.bottom.split("px")[0]) + 40 === Number(bullet2.style.bottom.split("px")[0])
+        && Number(bullet2.style.right.split("px")[0]) - 15 > 905 - Number(bird.style.left.split("px")[0])
+        && Number(bullet2.style.right.split("px")[0]) - 15 < 640
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
+    }
+
+    // /// ---------------------------------------------------------->
+
+    //  ///colision bullet three by top
+
+  
+     if (
+        Number(bird.style.bottom.split("px")[0]) < Number(bullet3.style.bottom.split("px")[0]) 
+        &&  Number(bird.style.bottom.split("px")[0]) > Number(bullet3.style.bottom.split("px")[0]) - 40
+        && Number(bullet3.style.right.split("px")[0]) - 15 > 905 - Number(bird.style.left.split("px")[0])
+        && Number(bullet3.style.right.split("px")[0]) - 15 < 640
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
+    }
+
+
+    //colision bullet three by right 
+
+    if (
+        Number(bullet3.style.right.split("px")[0]) - 15 === 890 - Number(bird.style.left.split("px")[0])
+        && Number(bird.style.bottom.split("px")[0])  <= Number(bullet3.style.bottom.split("px")[0]) + 30
+        && Number(bird.style.bottom.split("px")[0]) + 40 >=  Number(bullet3.style.bottom.split("px")[0])
+        ) {
+        stopGame = true
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+    }
+
+
+    //// -------------------------------------------------> 
+
+    //  ///colision bullet four by top
+
+     if (
+        Number(bird.style.bottom.split("px")[0]) < Number(bullet4.style.bottom.split("px")[0]) + 40 
+        &&  Number(bird.style.bottom.split("px")[0]) > Number(bullet4.style.bottom.split("px")[0]) - 40
+        && Number(bullet4.style.right.split("px")[0]) - 15 > 905 - Number(bird.style.left.split("px")[0])
+        && Number(bullet4.style.right.split("px")[0]) - 15 < 640
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
+    }
+
+   // colision bullet three by right 
+    if (Number(bullet4.style.right.split("px")[0]) - 15 === 890 - Number(bird.style.left.split("px")[0])
+        && Number(bird.style.bottom.split("px")[0]) - 30 <= Number(bullet4.style.bottom.split("px")[0])
+        && Number(bird.style.bottom.split("px")[0]) >= Number(bullet4.style.bottom.split("px")[0]) - 40
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
+    }
+
+    //colision bulet three with bird by bottom
+    if (
+        Number(bird.style.bottom.split("px")[0]) === Number(bullet4.style.bottom.split("px")[0] + 40)
+        && Number(bullet4.style.right.split("px")[0]) - 15 > 900 - Number(bird.style.left.split("px")[0])
+        && Number(bullet4.style.right.split("px")[0]) - 15 < 635
+    ) {
+        clearInterval(clarSetIntervalAnimationBulletID)
+        clearInterval(stopIntervalID)
+        stopGame = true
     }
 
 }, 7)
